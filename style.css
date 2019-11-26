@@ -1,0 +1,21 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+}
+
+.body-section_main {
+    display: none;
+    width: 50%;
+    border: 5px solid #000000;
+}
+
+.body-result_user_not_found{
+    display: none;
+    width: 50%;
+    border: 5px solid #000000;
+}

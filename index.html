@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title> GitHub search engine </title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <h1> Search for GitHub users </h1>
+
+    <form>
+        <label for "body-form_textfield"> GitHub Username </label>
+        <input type="text" name="textfield" class="body-form_textfield">
+        <input type="submit" name="submit" value="Search" class="body-form_submit">
+        <button class="body-form_clearAll">Clear All</button>
+    </form>
+
+    <h2> Results: </h2>
+
+    <div class="body-result_user_not_found"> The user you're looking for doesn't exists. <br> Please verify that you
+        typed in his/her name correctly. </div>
+
+    <section class="body-section_main">
+        <h3> Username: </h3>
+        <div class="body-section_username_result"></div>
+        <h3> Login Name: </h3>
+        <div class="body-section_login_result"></div>
+        <h3> Profile pic: </h4>
+            <img class="body-section_image_result" src="" alt="Image Not found"></img>
+    </section>
+
+    <script type="text/JavaScript" src="main.js"></script>
+</body>
+
+</html>
