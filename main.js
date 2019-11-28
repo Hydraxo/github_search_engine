@@ -3,7 +3,7 @@
 const formTextfield = document.querySelector(".body-form_textfield");
 const formSubmitButton = document.querySelector(".body-form_submit");
 const userNotFound = document.querySelector(".body-result_user_not_found");
-const clearAll = document.querySelector(".body-form_clearAll");
+const clearAllData = document.querySelector(".body-form_clearAll");
 const displayResultMain = document.querySelector(".body-section_main");
 const displayResultUsername = document.querySelector(".body-section_username_result");
 const displayResultImage = document.querySelector(".body-section_image_result");
@@ -13,7 +13,7 @@ let saveSearchInput = { textfield: "" };
 
 formTextfield.addEventListener("keyup", manageData);
 formSubmitButton.addEventListener("click", handleSearchButton);
-clearAll.addEventListener("click", clearAll);
+clearAllData.addEventListener("click", clearAll);
 
 function clearAll (e){
   e.preventDefault();
@@ -70,4 +70,3 @@ function fetchDataFromPage() {
       displayResultImage.src = data.avatar_url;
     })
 }
-
