@@ -1,35 +1,35 @@
 "use strict";
 
-const searchFieldListener = document.querySelector(".body-form_textfield");
-const searchButtonListener = document.querySelector(".body-form_submit");
-const showResult = document.querySelector(".body-section_main");
+const formTextfield = document.querySelector(".body-form_textfield");
+const formSubmitButton = document.querySelector(".body-form_submit");
 const userNotFound = document.querySelector(".body-result_user_not_found");
-const clearAllListener = document.querySelector(".body-form_clearAll");
+const clearAll = document.querySelector(".body-form_clearAll");
+const displayResultMain = document.querySelector(".body-section_main");
+const displayResultUsername = document.querySelector(".body-section_username_result");
+const displayResultImage = document.querySelector(".body-section_image_result");
+const displayResultLogin = document.querySelector(".body-section_login_result");
 
-let displayResultUsername = document.querySelector(".body-section_username_result");
-let displayResultImage = document.querySelector(".body-section_image_result");
-let displayResultLogin = document.querySelector(".body-section_login_result");
 let saveSearchInput = { textfield: "" };
 
-searchFieldListener.addEventListener("keyup", manageData);
-searchButtonListener.addEventListener("click", activateSearchButton);
-clearAllListener.addEventListener("click", clearAll);
+formTextfield.addEventListener("keyup", manageData);
+formSubmitButton.addEventListener("click", handleSearchButton);
+clearAll.addEventListener("click", clearAll);
 
 function clearAll (e){
   e.preventDefault();
-  showResult.style.display = "none";
+  displayResultMain.style.display = "none";
   userNotFound.style.display = "none";
-  searchFieldListener.value = "";
+  formTextfield.value = "";
 }
 
 function hideAll () {
-  showResult.style.display = "none";
+  displayResultMain.style.display = "none";
   userNotFound.style.display = "none";
 }
 
 function showSeachResultElements() {
-  showResult.style.display = "block";
-  searchFieldListener.value = "";
+  displayResultMain.style.display = "block";
+  formTextfield.value = "";
 }
 
 function noResultToDisplay() {
@@ -42,9 +42,9 @@ function manageData(e) {
   saveSearchInput[searchFieldHandler] = searchFieldValue;
 }
 
-function activateSearchButton(e) {
+function handleSearchButton(e) {
   e.preventDefault();
-  if (searchFieldListener.value === "") {
+  if (formTextfield.value === "") {
     alert("Please type in the user you're looking for");
   } else {
     fetchDataFromPage();
