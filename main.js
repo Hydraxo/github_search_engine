@@ -18,10 +18,24 @@ let saveSearchInput = { textfield: "" };
 let saveFollowersDataLogin = [];
 
 formTextfield.addEventListener("keyup", manageData);
-formSubmitButton.addEventListener("click", handleSearchButton);
+formSubmitButton.addEventListener("click", handleSearchButtonTimeout);
 clearAllData.addEventListener("click", handleClearAll);
 followersSeeDetailsButton.addEventListener("click", handleFollowersButton);
 followersGoBack.addEventListener("click", handleFollowersGoBack);
+
+function handleSearchButtonTimeout (e) {
+  e.preventDefault();
+  setTimeout(handleSearchButton, 200)
+}
+
+function handleSearchButton() {
+  clearFollowersArray();
+  if (formTextfield.value === "") {
+    alert("Please type in the user you're looking for");
+  } else {
+    fetchDataFromPage();
+  }
+}
 
 function handleClearAll(e) {
   e.preventDefault();
@@ -53,17 +67,6 @@ function manageData(e) {
   saveSearchInput[searchFieldHandler] = searchFieldValue;
 }
 
-function handleSearchButton(e) {
-  
-  e.preventDefault();
-  clearFollowersArray();
-  if (formTextfield.value === "") {
-    alert("Please type in the user you're looking for");
-  } else {
-    fetchDataFromPage();
-  }
-}
-
 function fetchDataFromPage() {
   fetch("https://api.github.com/users/" + saveSearchInput.textfield)
     .then(function (mainResponse) {
@@ -82,7 +85,11 @@ function fetchDataFromPage() {
       displayResultLogin.innerHTML = mainData.login;
       displayResultImage.src = mainData.avatar_url;
       displayResultFollowers.innerHTML = mainData.followers + "&nbsp";
+
+      if (mainData.followers >= 30) { followersSeeDetailsButton.innerHTML = "Show First 30 Results"; } 
+      if (mainData.followers < 30) { followersSeeDetailsButton.innerHTML = "Show Details"; } 
       if (mainData.name === null) { displayResultUsername.innerHTML = "This user doesn't have a username" };
+
       return fetch("https://api.github.com/users/" + saveSearchInput.textfield + "/followers")
     })
     .then(function (followersResponse) {
@@ -97,12 +104,6 @@ function fetchDataFromPage() {
           saveFollowersDataLogin.push (followersData[i].login);
           }
           console.log(saveFollowersDataLogin);
-          if (saveFollowersDataLogin.length >= 30){
-            followersSeeDetailsButton.innerHTML = "Show First 30 Results";
-          } 
-          if (saveFollowersDataLogin.length < 30){
-            followersSeeDetailsButton.innerHTML = "Show Details";
-          } 
           createFollowersElements();
         }
     })
@@ -119,6 +120,10 @@ function createFollowersElements() {
   saveFollowersDataLogin.forEach(follower=> {
     const followersCreateItem = document.createElement("li");
     const followersCreateContent = document.createTextNode(follower)
+
+    followersCreateItem.setAttribute("class", "body-section_followers_li_links");
+    // Listen to all the elements from the list. 
+    followersCreateItem.addEventListener("click", goToFollowersProfile);
     followersCreateItem.appendChild(followersCreateContent);
     showFollowersData.appendChild(followersCreateItem);
   });
@@ -136,5 +141,12 @@ function handleFollowersGoBack (){
 
 function clearFollowersArray() {
   saveFollowersDataLogin.length = 0;
+}
 
+function goToFollowersProfile (e) {
+  // Get the value of the clicked element, work on the event "click". Depending where the user clicks we check the target and get the value of the innerHTML. 
+    console.log(e.target.innerHTML);
+    saveSearchInput.textfield = e.target.innerHTML;
+    formTextfield.value = e.target.innerHTML
+    handleSearchButton();    
 }
