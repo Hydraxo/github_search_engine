@@ -19,3 +19,31 @@
     width: 50%;
     border: 5px solid #000000;
 }
+
+h3{
+    margin: 5px 0px;
+}
+
+.body-section_username_result{
+    margin: 0px 15px;
+}
+
+.body-section_login_result{
+    margin: 0px 15px;
+}
+
+.body-section_followers_main{
+    margin: 1px 10px 0px 15px;
+    display: flex;
+}
+
+.body-section_image_result{
+    margin: 0px 15px;
+}
+
+.body-section_followers {
+    display: none;
+    width: 50%;
+    border: 5px solid #000000;
+    text-transform: capitalize;
+}
