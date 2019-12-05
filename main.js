@@ -148,5 +148,10 @@ function goToFollowersProfile (e) {
     console.log(e.target.innerHTML);
     saveSearchInput.textfield = e.target.innerHTML;
     formTextfield.value = e.target.innerHTML
-    handleSearchButton();    
+    handleSearchButton();
+    displayNewBackButton();    
+}
+
+function displayNewBackButton (){
+  
 }
