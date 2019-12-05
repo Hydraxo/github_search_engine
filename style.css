@@ -21,7 +21,7 @@ html {
 
 .body-section_main {
     display: none;
-    width: 50%;
+    width: 40%;
     border: 5px solid #FFFFFF;
 }
 
@@ -32,29 +32,29 @@ html {
 }
 
 h3{
-    margin: 5px 0px;
+    margin: 5px 5px;
 }
 
 .body-section_username_result{
-    margin: 0px 15px;
+    margin: 0px 20px;
 }
 
 .body-section_login_result{
-    margin: 0px 15px;
+    margin: 0px 20px;
 }
 
 .body-section_followers_main{
-    margin: 1px 10px 0px 15px;
+    margin: 1px 10px 0px 20px;
     display: flex;
 }
 
 .body-section_image_result{
-    margin: 0px 15px;
+    margin: 0px 20px;
 }
 
 .body-section_followers {
     display: none;
-    width: 50%;
+    width: 40%;
     border: 5px solid #FFFFFF;
     text-transform: capitalize;
 }
@@ -66,8 +66,41 @@ h3{
 
 button {
     color: #000000;
+    background-color: #f2f2f2;
+}
+
+button:hover {
+    color: #202129;
+    background-color: #e1e2e2;
+    opacity: 1;
+}
+
+button:active {
+    background-color: #d5d6d6;
+    opacity: 1;
 }
 
 .body-form_submit {
     color: #000000;
+    background-color: #f2f2f2;
+}
+.body-form_submit:hover {
+    color: #202129;
+    background-color: #e1e2e2;
+    opacity: 1;
+}
+
+.body-form_submit:active {
+    background-color: #d5d6d6;
+    opacity: 1;
+}
+
+.body-section_main_back_other_followers{
+    display: none;
+    float: right;
+    margin: 10px;
+}
+
+.body-section_followers_back{
+    margin: 5px;
 }

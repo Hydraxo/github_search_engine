@@ -13,22 +13,26 @@ const followersSeeDetailsButton = document.querySelector(".body-section_follower
 const displayResultDetailsFollowers = document.querySelector(".body-section_followers");
 const followersGoBack = document.querySelector(".body-section_followers_back");
 const showFollowersData = document.querySelector(".body-section_followers_content");
+const goBackFromClickedFollower = document.querySelector(".body-section_main_back_other_followers");
 
 let saveSearchInput = { textfield: "" };
 let saveFollowersDataLogin = [];
+let saveFollowersDataLoginToGoBack = { loginName: ""};
 
 formTextfield.addEventListener("keyup", manageData);
 formSubmitButton.addEventListener("click", handleSearchButtonTimeout);
 clearAllData.addEventListener("click", handleClearAll);
 followersSeeDetailsButton.addEventListener("click", handleFollowersButton);
 followersGoBack.addEventListener("click", handleFollowersGoBack);
+goBackFromClickedFollower.addEventListener("click", handleGoBackFromClickedFollowers);
 
-function handleSearchButtonTimeout (e) {
+function handleSearchButtonTimeout(e) {
   e.preventDefault();
   setTimeout(handleSearchButton, 200)
 }
 
 function handleSearchButton() {
+  goBackFromClickedFollower.style.display = "none";
   clearFollowersArray();
   if (formTextfield.value === "") {
     alert("Please type in the user you're looking for");
@@ -42,6 +46,7 @@ function handleClearAll(e) {
   displayResultMain.style.display = "none";
   userNotFound.style.display = "none";
   formTextfield.value = "";
+  goBackFromClickedFollower.style.display = "none";
   clearFollowersArray();
   hideAll();
 }
@@ -65,6 +70,7 @@ function manageData(e) {
   const searchFieldHandler = e.target.name;
   const searchFieldValue = e.target.value;
   saveSearchInput[searchFieldHandler] = searchFieldValue;
+  saveFollowersDataLoginToGoBack.loginName = saveSearchInput.textfield;
 }
 
 function fetchDataFromPage() {
@@ -86,8 +92,8 @@ function fetchDataFromPage() {
       displayResultImage.src = mainData.avatar_url;
       displayResultFollowers.innerHTML = mainData.followers + "&nbsp";
 
-      if (mainData.followers >= 30) { followersSeeDetailsButton.innerHTML = "Show First 30 Results"; } 
-      if (mainData.followers < 30) { followersSeeDetailsButton.innerHTML = "Show Details"; } 
+      if (mainData.followers >= 30) { followersSeeDetailsButton.innerHTML = "Show First 30 Results"; }
+      if (mainData.followers < 30) { followersSeeDetailsButton.innerHTML = "Show Details"; }
       if (mainData.name === null) { displayResultUsername.innerHTML = "This user doesn't have a username" };
 
       return fetch("https://api.github.com/users/" + saveSearchInput.textfield + "/followers")
@@ -97,27 +103,27 @@ function fetchDataFromPage() {
     })
     .then(function (followersData) {
       if (followersData === null) {
-        console.log("No data found"); 
+        console.log("No data found");
       } else {
         let i;
-          for (i=0; i<followersData.length; i++) {
-          saveFollowersDataLogin.push (followersData[i].login);
-          }
-          console.log(saveFollowersDataLogin);
-          createFollowersElements();
+        for (i = 0; i < followersData.length; i++) {
+          saveFollowersDataLogin.push(followersData[i].login);
         }
+        // console.log(saveFollowersDataLogin);
+        createFollowersElements();
+      }
     })
-    .catch(function() {
+    .catch(function () {
       console.log("Error - No followers found");
-  });
+    });
 }
 
 function createFollowersElements() {
-  if(showFollowersData.children.length > 0){
-  showFollowersData.innerHTML = "";
+  if (showFollowersData.children.length > 0) {
+    showFollowersData.innerHTML = "";
   }
 
-  saveFollowersDataLogin.forEach(follower=> {
+  saveFollowersDataLogin.forEach(follower => {
     const followersCreateItem = document.createElement("li");
     const followersCreateContent = document.createTextNode(follower)
 
@@ -134,7 +140,7 @@ function handleFollowersButton() {
   displayResultDetailsFollowers.style.display = "block";
 }
 
-function handleFollowersGoBack (){
+function handleFollowersGoBack() {
   hideAll();
   showSeachResultElements();
 }
@@ -143,15 +149,21 @@ function clearFollowersArray() {
   saveFollowersDataLogin.length = 0;
 }
 
-function goToFollowersProfile (e) {
+function goToFollowersProfile(e) {
   // Get the value of the clicked element, work on the event "click". Depending where the user clicks we check the target and get the value of the innerHTML. 
-    console.log(e.target.innerHTML);
-    saveSearchInput.textfield = e.target.innerHTML;
-    formTextfield.value = e.target.innerHTML
-    handleSearchButton();
-    displayNewBackButton();    
+  saveSearchInput.textfield = e.target.innerHTML;
+  formTextfield.value = e.target.innerHTML
+  handleSearchButton();
+  displayNewBackButton();
 }
 
-function displayNewBackButton (){
-  
+function displayNewBackButton() {
+  goBackFromClickedFollower.style.display = "flex";
+}
+
+function handleGoBackFromClickedFollowers(e) {
+  e.preventDefault();
+  saveSearchInput.textfield = saveFollowersDataLoginToGoBack.loginName;
+  formTextfield.value = saveFollowersDataLoginToGoBack.loginName;
+  handleSearchButton();
 }
