@@ -99,7 +99,7 @@ button:active {
     opacity: 1;
 }
 
-.body-section_main_back_other_followers{
+.body-section_main_back_to_first_result{
     display: none;
     float: right;
     margin: 10px;
@@ -107,4 +107,10 @@ button:active {
 
 .body-section_followers_back{
     margin: 5px;
+}
+
+.body-section_main_back_other_followers {
+    display: none;
+    float: right;
+    margin: 10px;
 }

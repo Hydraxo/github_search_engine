@@ -13,18 +13,21 @@ const followersSeeDetailsButton = document.querySelector(".body-section_follower
 const displayResultDetailsFollowers = document.querySelector(".body-section_followers");
 const followersGoBack = document.querySelector(".body-section_followers_back");
 const showFollowersData = document.querySelector(".body-section_followers_content");
-const goBackFromClickedFollower = document.querySelector(".body-section_main_back_other_followers");
+const goBackToFirstResultButton = document.querySelector(".body-section_main_back_to_first_result");
+const goBackToPreviousFollower = document.querySelector(".body-section_main_back_other_followers");
 
 let saveSearchInput = { textfield: "" };
 let saveFollowersDataLogin = [];
-let saveFollowersDataLoginToGoBack = { loginName: ""};
+let saveFollowersDataLoginGoToStart = { loginName: "" };
+let saveFollowersDataLoginGoBack = [];
 
 formTextfield.addEventListener("keyup", manageData);
 formSubmitButton.addEventListener("click", handleSearchButtonTimeout);
 clearAllData.addEventListener("click", handleClearAll);
 followersSeeDetailsButton.addEventListener("click", handleFollowersButton);
 followersGoBack.addEventListener("click", handleFollowersGoBack);
-goBackFromClickedFollower.addEventListener("click", handleGoBackFromClickedFollowers);
+goBackToFirstResultButton.addEventListener("click", handleGoBackToFirstResult);
+goBackToPreviousFollower.addEventListener("click", handleGoBackPreviousFollower)
 
 function handleSearchButtonTimeout(e) {
   e.preventDefault();
@@ -32,7 +35,12 @@ function handleSearchButtonTimeout(e) {
 }
 
 function handleSearchButton() {
-  goBackFromClickedFollower.style.display = "none";
+  saveFollowersDataLoginGoBack.push(saveSearchInput.textfield);
+  console.log(saveFollowersDataLoginGoBack);
+  if (saveFollowersDataLoginGoBack.length <= 2) {
+    goBackToFirstResultButton.style.display = "none";
+    goBackToPreviousFollower.style.display = "none";
+  }
   clearFollowersArray();
   if (formTextfield.value === "") {
     alert("Please type in the user you're looking for");
@@ -46,7 +54,8 @@ function handleClearAll(e) {
   displayResultMain.style.display = "none";
   userNotFound.style.display = "none";
   formTextfield.value = "";
-  goBackFromClickedFollower.style.display = "none";
+  goBackToFirstResultButton.style.display = "none";
+  goBackToPreviousFollower.style.display = "none";
   clearFollowersArray();
   hideAll();
 }
@@ -67,10 +76,11 @@ function noResultToDisplay() {
 }
 
 function manageData(e) {
+  saveFollowersDataLoginGoBack.length = 0;
   const searchFieldHandler = e.target.name;
   const searchFieldValue = e.target.value;
   saveSearchInput[searchFieldHandler] = searchFieldValue;
-  saveFollowersDataLoginToGoBack.loginName = saveSearchInput.textfield;
+  saveFollowersDataLoginGoToStart.loginName = saveSearchInput.textfield;
 }
 
 function fetchDataFromPage() {
@@ -158,12 +168,23 @@ function goToFollowersProfile(e) {
 }
 
 function displayNewBackButton() {
-  goBackFromClickedFollower.style.display = "flex";
+  goBackToFirstResultButton.style.display = "flex";
+  goBackToPreviousFollower.style.display = "flex";
 }
 
-function handleGoBackFromClickedFollowers(e) {
+function handleGoBackToFirstResult(e) {
   e.preventDefault();
-  saveSearchInput.textfield = saveFollowersDataLoginToGoBack.loginName;
-  formTextfield.value = saveFollowersDataLoginToGoBack.loginName;
+  saveSearchInput.textfield = saveFollowersDataLoginGoToStart.loginName;
+  formTextfield.value = saveFollowersDataLoginGoToStart.loginName;
   handleSearchButton();
+}
+
+function handleGoBackPreviousFollower(e) {
+  e.preventDefault();
+  saveFollowersDataLoginGoBack.pop();
+  const arrayPosition = saveFollowersDataLoginGoBack[saveFollowersDataLoginGoBack.length - 1];
+  saveSearchInput.textfield = arrayPosition;
+  formTextfield.value = arrayPosition;
+  handleSearchButton();
+  saveFollowersDataLoginGoBack.pop();
 }
