@@ -35,6 +35,10 @@ h3{
     margin: 5px 5px;
 }
 
+.body-form_textfield_style{
+    color: #000000;
+}
+
 .body-section_username_result{
     margin: 0px 20px;
 }
