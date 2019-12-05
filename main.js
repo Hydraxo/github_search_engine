@@ -36,7 +36,7 @@ function handleSearchButtonTimeout(e) {
 
 function handleSearchButton() {
   saveFollowersDataLoginGoBack.push(saveSearchInput.textfield);
-  console.log(saveFollowersDataLoginGoBack);
+  // console.log(saveFollowersDataLoginGoBack);
   if (saveFollowersDataLoginGoBack.length <= 2) {
     goBackToFirstResultButton.style.display = "none";
     goBackToPreviousFollower.style.display = "none";
